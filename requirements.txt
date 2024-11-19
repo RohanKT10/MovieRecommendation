@@ -6,8 +6,8 @@ requests
 flask
 opencv-python
 aiobotocore
-altair==5.4.1
-streamlit==1.19.0
+altair==4.2.0
+streamlit==1.25.0
 pandas>=2.0.0
 setuptools>=67.6.0
 
