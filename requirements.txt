@@ -4,5 +4,6 @@ numpy==1.26.4
 plotly==5.15.0
 scikit-learn
 setuptools>=67.6.0
+pillow==10.0.1
 
 
