@@ -8,4 +8,4 @@ requests
 flask
 opencv-python
 aiobotocore
-
+altair
