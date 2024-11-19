@@ -1,0 +1,19 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+
+# Ignore virtual environment directories
+venv/
+env/
+
+
+
+# Ignore configuration files for IDEs
+.idea/
+.vscode/
+
+# Ignore log files
+*.log
+
+# Ignore dependency file
+Pipfile.lock
