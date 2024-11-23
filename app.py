@@ -81,7 +81,7 @@ def get_fallback_image():
 # English Movie Recommendations
 if language_choice == "English":
     def fetch_movie_details(movie_id):
-        api_key = "8265bd1679663a7ea12ac168da84d2e8"  # Replace with your TMDB API key
+        api_key = "8265bd1679663a7ea12ac168da84d2e8"  
         response = requests.get(
             f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&language=en-US"
         )
