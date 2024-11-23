@@ -2,6 +2,16 @@ import streamlit as st
 import pickle
 import pandas as pd
 import requests
+import bz2
+
+# Function to decompress a .pkl.bz2 file
+def decompress_pkl(input_file):
+    with bz2.open(input_file, 'rb') as f_in:
+        return pickle.load(f_in)
+
+# Function to get fallback image for missing poster
+def get_fallback_image():
+    return "https://via.placeholder.com/130x195?text=Poster+Not+Available"
 
 # Styling for the page
 st.markdown(
@@ -74,14 +84,10 @@ language_choice = st.sidebar.radio("Select Language", ["English", "Hindi"])
 button1_key = "button1"
 button2_key = "button2"
 
-# Function to get fallback image for missing poster
-def get_fallback_image():
-    return "https://via.placeholder.com/130x195?text=Poster+Not+Available"
-
 # English Movie Recommendations
 if language_choice == "English":
     def fetch_movie_details(movie_id):
-        api_key = "8265bd1679663a7ea12ac168da84d2e8"  
+        api_key = "8265bd1679663a7ea12ac168da84d2e8"
         response = requests.get(
             f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&language=en-US"
         )
@@ -110,7 +116,7 @@ if language_choice == "English":
 
     def recommend(movie):
         movie_index = movies[movies['title'] == movie].index[0]
-        distances = similarity[movie_index]
+        distances = similarity_english[movie_index]
         movies_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:6]
 
         recommended_movies = []
@@ -121,9 +127,10 @@ if language_choice == "English":
                 recommended_movies.append(details)
         return recommended_movies
 
+    # Load movies and similarity data
     movies_dict = pickle.load(open('movies.pkl', 'rb'))
     movies = pd.DataFrame(movies_dict)
-    similarity = pickle.load(open('similarity_english.pkl', 'rb'))
+    similarity_english = decompress_pkl('similarity_english.pkl.bz2')
 
     st.title('Movie Recommendation System (English)')
 
@@ -175,7 +182,7 @@ if language_choice == "Hindi":
 
     def recommend(movie):
         movie_index = movies[movies['original_title'] == movie].index[0]
-        distances = similarity[movie_index]
+        distances = similarity_hindi[movie_index]
         movies_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:6]
         recommended_movies = []
         for i in movies_list:
@@ -185,9 +192,10 @@ if language_choice == "Hindi":
                 recommended_movies.append(details)
         return recommended_movies
 
+    # Load movies and similarity data for Hindi
     movies_dict = pickle.load(open('movies2.pkl', 'rb'))
     movies = pd.DataFrame(movies_dict)
-    similarity = pickle.load(open('similarity_hindi.pkl', 'rb'))
+    similarity_hindi = decompress_pkl('similarity_hindi.pkl.bz2')
 
     st.title('Movie Recommendation System (Hindi)')
 
@@ -214,3 +222,4 @@ if language_choice == "Hindi":
                             </div>
                         </div>
                     """, unsafe_allow_html=True)
+
