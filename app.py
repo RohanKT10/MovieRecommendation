@@ -128,9 +128,9 @@ if language_choice == "English":
         return recommended_movies
 
     # Load movies and similarity data
-    movies_dict = pickle.load(open('movies.pkl', 'rb'))
+    movies_dict = pickle.load(open('movies.pkl', 'rb'))  # Keep the original file
     movies = pd.DataFrame(movies_dict)
-    similarity_english = decompress_pkl('similarity_english.pkl.bz2')
+    similarity_english = decompress_pkl('similarity_english.pkl.bz2')  # Decompress similarity file
 
     st.title('Movie Recommendation System (English)')
 
@@ -193,9 +193,9 @@ if language_choice == "Hindi":
         return recommended_movies
 
     # Load movies and similarity data for Hindi
-    movies_dict = pickle.load(open('movies2.pkl', 'rb'))
+    movies_dict = pickle.load(open('movies2.pkl', 'rb'))  # Keep the original file
     movies = pd.DataFrame(movies_dict)
-    similarity_hindi = decompress_pkl('similarity_hindi.pkl.bz2')
+    similarity_hindi = decompress_pkl('similarity_hindi.pkl.bz2')  # Decompress similarity file
 
     st.title('Movie Recommendation System (Hindi)')
 
@@ -222,4 +222,5 @@ if language_choice == "Hindi":
                             </div>
                         </div>
                     """, unsafe_allow_html=True)
+
 
